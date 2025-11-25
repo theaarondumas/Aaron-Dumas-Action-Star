@@ -36,16 +36,40 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #05070a;
+      --bg-alt: #0b0f16;
+      --text: #f5f5f5;
+      --text-muted: #cccccc;
+      --accent: #ff3366;
+      --accent-soft: #ff7a3c;
+      --pill-bg: rgba(5,7,10,0.75);
+      --border-subtle: rgba(255,255,255,0.12);
+      --nav-bg: rgba(5,7,10,0.96);
+    }
+
+    body[data-theme="light"] {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --text: #111111;
+      --text-muted: #555555;
+      --accent: #e0205a;
+      --accent-soft: #ff7a3c;
+      --pill-bg: #f0f0f5;
+      --border-subtle: rgba(0,0,0,0.12);
+      --nav-bg: rgba(255,255,255,0.95);
+    }
+
     html { scroll-behavior: smooth; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1a1f2b 0, #05070a 45%, #020308 100%);
-      color: #f5f5f5;
+      background: radial-gradient(circle at top, #1a1f2b 0, var(--bg) 45%, #020308 100%);
+      color: var(--text);
       line-height: 1.6;
     }
 
-    a { color: #ff3366; text-decoration: none; }
+    a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     /* NAVBAR */
@@ -54,8 +78,8 @@
       top: 0;
       z-index: 20;
       backdrop-filter: blur(10px);
-      background: linear-gradient(to right, rgba(5,7,10,0.92), rgba(10,10,16,0.92));
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(to right, var(--nav-bg), var(--nav-bg));
+      border-bottom: 1px solid var(--border-subtle);
     }
     .nav-inner {
       max-width: 1080px;
@@ -64,25 +88,80 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 10px;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
     .nav-logo {
       font-size: 0.9rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
     .nav-links {
       display: flex;
       gap: 16px;
       font-size: 0.85rem;
+      flex-wrap: wrap;
     }
     .nav-links a {
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: #dddddd;
+      color: var(--text-muted);
     }
-    .nav-links a:hover { color: #ff6688; }
-    @media (max-width: 640px) {
-      .nav-inner { flex-direction: column; gap: 6px; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-toggle {
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .theme-toggle span {
+      font-size: 0.9rem;
+    }
+
+    .btn-nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.65);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 720px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-right {
+        align-self: stretch;
+        justify-content: space-between;
+        width: 100%;
+      }
     }
 
     .page {
@@ -96,7 +175,7 @@
       display: grid;
       gap: 24px;
       padding: 32px 0 32px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid var(--border-subtle);
     }
     @media (min-width: 880px) {
       .hero {
@@ -122,12 +201,12 @@
     .hero-tagline {
       margin-top: 10px;
       font-size: 0.95rem;
-      color: #cccccc;
+      color: var(--text-muted);
     }
     .hero-roles {
       margin-top: 6px;
       font-size: 0.90rem;
-      color: #a5a5a5;
+      color: var(--text-muted);
     }
 
     .hero-cta-row {
@@ -150,15 +229,18 @@
       white-space: nowrap;
     }
     .btn-primary {
-      background: linear-gradient(135deg, #ff3366, #ff7a3c);
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
       border-color: rgba(255,255,255,0.25);
       color: #fff;
       box-shadow: 0 10px 30px rgba(0,0,0,0.65);
     }
     .btn-outline {
       border-color: rgba(255,255,255,0.25);
-      color: #f5f5f5;
+      color: var(--text);
       background: rgba(5,7,10,0.6);
+    }
+    body[data-theme="light"] .btn-outline {
+      background: #ffffff;
     }
     .btn-outline:hover { background: rgba(255,255,255,0.05); }
 
@@ -177,7 +259,7 @@
     /* SECTION BASICS */
     section {
       padding: 28px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid var(--border-subtle);
     }
     section:last-of-type { border-bottom: none; }
 
@@ -186,20 +268,20 @@
       margin-bottom: 8px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: #ff3366;
+      color: var(--accent);
     }
 
     .label {
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: #999;
+      color: var(--text-muted);
       margin-bottom: 4px;
     }
 
     .tagline {
       font-size: 1.0rem;
-      color: #e0e0e0;
+      color: var(--text);
     }
 
     .pill-row {
@@ -212,8 +294,9 @@
       border-radius: 999px;
       padding: 4px 10px;
       font-size: 0.78rem;
-      border: 1px solid rgba(255,255,255,0.22);
-      background: rgba(5,7,10,0.75);
+      border: 1px solid var(--border-subtle);
+      background: var(--pill-bg);
+      color: var(--text);
     }
 
     .grid {
@@ -230,7 +313,10 @@
       padding: 16px 16px 18px;
       border-radius: 10px;
       background: linear-gradient(135deg, rgba(255,51,102,0.14), rgba(0,0,0,0.85));
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--border-subtle);
+    }
+    body[data-theme="light"] .role-card {
+      background: linear-gradient(135deg, rgba(255,51,102,0.08), #ffffff);
     }
     .role-card h4 {
       font-size: 0.95rem;
@@ -241,7 +327,7 @@
     }
     .role-keywords {
       font-size: 0.8rem;
-      color: #ccc;
+      color: var(--text-muted);
       margin-bottom: 6px;
     }
     .role-desc {
@@ -265,13 +351,33 @@
       width: 100%;
       max-width: 460px;
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid var(--border-subtle);
       box-shadow: 0 18px 45px rgba(0,0,0,0.9);
+    }
+    body[data-theme="light"] .tech-poster img {
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
     }
     .image-caption {
       font-size: 0.8rem;
-      color: #ccc;
+      color: var(--text-muted);
       margin-top: 6px;
+    }
+
+    .cta-strip {
+      margin-top: 28px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(135deg, rgba(255,51,102,0.18), rgba(0,0,0,0.9));
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+    body[data-theme="light"] .cta-strip {
+      background: linear-gradient(135deg, rgba(255,51,102,0.14), #ffffff);
     }
 
     .contact { font-size: 0.9rem; }
@@ -279,7 +385,7 @@
 
     .small {
       font-size: 0.8rem;
-      color: #999;
+      color: var(--text-muted);
       margin-top: 8px;
     }
 
@@ -287,23 +393,35 @@
       padding: 18px 16px 26px;
       text-align: center;
       font-size: 0.75rem;
-      color: #777;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
       margin-top: 12px;
     }
   </style>
 </head>
-<body>
+<body data-theme="dark">
 
 <!-- NAVBAR -->
 <nav class="nav">
   <div class="nav-inner">
-    <div class="nav-logo">AAD • ACTION</div>
-    <div class="nav-links">
-      <a href="#top">Home</a>
-      <a href="#roles">Roles</a>
-      <a href="#technician">The Technician</a>
-      <a href="#contact">Contact</a>
+    <div class="nav-left">
+      <div class="nav-logo">AAD • ACTION</div>
+      <div class="nav-links">
+        <a href="#top">Home</a>
+        <a href="#roles">Roles</a>
+        <a href="#technician">The Technician</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <button id="themeToggle" class="theme-toggle" type="button">
+        <span id="themeIcon">☾</span>
+        <span id="themeLabel">Dark</span>
+      </button>
+      <a class="btn-nav-cta" href="mailto:aardumas@gmail.com?subject=Booking%20Inquiry%20for%20Aaron%20Alexandre%20Dumas">
+        Book Aaron
+      </a>
     </div>
   </div>
 </nav>
@@ -326,8 +444,8 @@
         <a class="btn btn-primary" href="https://resumes.actorsaccess.com/aarondumas" target="_blank">
           View Actors Access
         </a>
-        <a class="btn btn-outline" href="#contact">
-          Contact / Casting
+        <a class="btn btn-outline" href="mailto:aardumas@gmail.com?subject=Booking%20Inquiry%20for%20Aaron%20Alexandre%20Dumas">
+          Email for Casting
         </a>
       </div>
     </div>
@@ -466,12 +584,25 @@
       </div>
 
       <div class="tech-poster">
-  <img src="Technician.PNG" 
-       alt="The Technician action film poster featuring Aaron Alexandre Dumas" />
-  <p class="image-caption">
-    <em>The Technician</em> — Filipino American action lead.
-  </p>
-</div>
+        <img src="Technician.PNG"
+             alt="The Technician action film poster featuring Aaron Alexandre Dumas" />
+        <p class="image-caption">
+          <em>The Technician</em> — Filipino American action lead.
+        </p>
+      </div>
+    </div>
+
+    <!-- MID-PAGE CTA STRIP -->
+    <div class="cta-strip">
+      <span>
+        Casting a villain, detective, or action lead?  
+        Book a Filipino American actor with built-in stunt and tactical sensibility.
+      </span>
+      <a class="btn btn-primary" href="mailto:aardumas@gmail.com?subject=Casting%20Inquiry%20-%20The%20Technician%20Lead">
+        Book for Your Project
+      </a>
+    </div>
+  </section>
 
   <!-- CONTACT -->
   <section id="contact">
@@ -512,7 +643,38 @@
 </footer>
 
 <script>
+  // year in footer
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // theme toggle with localStorage
+  const body = document.body;
+  const toggle = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+
+  function applyTheme(theme) {
+    body.setAttribute('data-theme', theme);
+    if (theme === 'light') {
+      icon.textContent = '☀';
+      label.textContent = 'Light';
+    } else {
+      icon.textContent = '☾';
+      label.textContent = 'Dark';
+    }
+  }
+
+  const storedTheme = localStorage.getItem('aad-theme');
+  if (storedTheme === 'light' || storedTheme === 'dark') {
+    applyTheme(storedTheme);
+  } else {
+    applyTheme('dark');
+  }
+
+  toggle.addEventListener('click', () => {
+    const current = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    applyTheme(current);
+    localStorage.setItem('aad-theme', current);
+  });
 </script>
 
 </body>
