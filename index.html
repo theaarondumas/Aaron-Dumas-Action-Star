@@ -10,9 +10,9 @@
   <!-- SECURITY / PRIVACY META -->
   <!-- Referrer policy: don't leak full URLs to other sites -->
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <!-- Basic content security policy for a static site -->
+  <!-- Content Security Policy for a static site with Google Fonts -->
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
 
   <!-- KEYWORDS -->
   <meta name="keywords" content="Aaron Alexandre Dumas, Filipino American actor, Filipino actor, Filipino American action actor, villain, antagonist, detective, agent, military, love interest, supporting action, crime drama, The Technician, Los Angeles actor" />
@@ -40,19 +40,24 @@
   }
   </script>
 
+  <!-- 80s ACTION FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #05070a;
+      --bg: #05040b;
       --bg-alt: #0b0f16;
       --text: #f5f5f5;
-      --text-muted: #cccccc;
-      --accent: #ff3366;
+      --text-muted: #b8b8d0;
+      --accent: #ff337a;
       --accent-soft: #ff7a3c;
-      --pill-bg: rgba(5,7,10,0.75);
-      --border-subtle: rgba(255,255,255,0.12);
-      --nav-bg: rgba(5,7,10,0.96);
+      --pill-bg: rgba(5,7,18,0.85);
+      --border-subtle: rgba(255,255,255,0.16);
+      --nav-bg: rgba(5,7,18,0.96);
     }
 
     body[data-theme="light"] {
@@ -70,8 +75,8 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1a1f2b 0, var(--bg) 45%, #020308 100%);
+      font-family: 'Oswald', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #27123f 0, var(--bg) 46%, #020308 100%);
       color: var(--text);
       line-height: 1.6;
     }
@@ -79,14 +84,21 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
+    .headline {
+      font-family: 'Russo One', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
     /* NAVBAR - ONE COLUMN, CENTERED */
     .nav {
       position: sticky;
       top: 0;
       z-index: 20;
       backdrop-filter: blur(10px);
-      background: linear-gradient(to right, var(--nav-bg), var(--nav-bg));
+      background: linear-gradient(90deg, rgba(10,8,26,0.98), rgba(18,8,32,0.98));
       border-bottom: 1px solid var(--border-subtle);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     }
     .nav-inner {
       max-width: 1080px;
@@ -99,20 +111,21 @@
       text-align: center;
     }
     .nav-logo {
+      font-family: 'Russo One', system-ui, -apple-system;
       font-size: 0.9rem;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
     }
     .nav-links {
       display: flex;
       gap: 16px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       flex-wrap: wrap;
       justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
     }
     .nav-links a {
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
       color: var(--text-muted);
     }
     .nav-links a:hover { color: var(--accent); }
@@ -144,16 +157,17 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.18em;
       border: 1px solid rgba(255,255,255,0.25);
       background: linear-gradient(135deg, var(--accent), var(--accent-soft));
       color: #fff;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.65);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
       white-space: nowrap;
+      font-family: 'Russo One', system-ui, -apple-system;
     }
 
     .page {
@@ -178,34 +192,41 @@
     }
 
     .hero-kicker {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.22em;
       color: #ffcc66;
       margin-bottom: 8px;
     }
     .hero-name {
-      font-size: clamp(2.2rem, 4vw, 2.8rem);
-      letter-spacing: 0.18em;
+      font-family: 'Russo One', system-ui, -apple-system;
+      font-size: clamp(2.3rem, 4vw, 2.9rem);
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       line-height: 1.25;
+      text-shadow:
+        0 0 10px rgba(255,51,122,0.8),
+        0 0 22px rgba(157,111,255,0.65),
+        0 0 40px rgba(0,0,0,0.9);
     }
     .hero-tagline {
-      margin-top: 10px;
-      font-size: 0.95rem;
+      margin-top: 12px;
+      font-size: 0.96rem;
       color: var(--text-muted);
     }
     .hero-roles {
       margin-top: 6px;
-      font-size: 0.90rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
     .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 20px;
     }
     .btn {
       display: inline-flex;
@@ -213,12 +234,13 @@
       justify-content: center;
       padding: 8px 18px;
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.18em;
       border: 1px solid transparent;
       cursor: pointer;
       white-space: nowrap;
+      font-family: 'Russo One', system-ui, -apple-system;
     }
     .btn-primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-soft));
@@ -227,9 +249,9 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.65);
     }
     .btn-outline {
-      border-color: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.35);
       color: var(--text);
-      background: rgba(5,7,10,0.6);
+      background: rgba(5,7,18,0.7);
     }
     body[data-theme="light"] .btn-outline {
       background: #ffffff;
@@ -243,8 +265,10 @@
     .hero-headshot img {
       width: min(260px, 75vw);
       border-radius: 18px;
-      border: 2px solid rgba(255,255,255,0.35);
-      box-shadow: 0 18px 50px rgba(0,0,0,0.9);
+      border: 2px solid rgba(255,255,255,0.5);
+      box-shadow:
+        0 18px 50px rgba(0,0,0,0.9),
+        0 0 18px rgba(255,51,122,0.6);
       object-fit: cover;
     }
 
@@ -259,8 +283,9 @@
       font-size: 1.1rem;
       margin-bottom: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.2em;
       color: var(--accent);
+      font-family: 'Russo One', system-ui, -apple-system;
     }
 
     .label {
@@ -289,6 +314,8 @@
       border: 1px solid var(--border-subtle);
       background: var(--pill-bg);
       color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
 
     .grid {
@@ -304,23 +331,29 @@
     .role-card {
       padding: 16px 16px 18px;
       border-radius: 10px;
-      background: linear-gradient(135deg, rgba(255,51,102,0.14), rgba(0,0,0,0.85));
+      background: radial-gradient(circle at top left,
+                 rgba(255,51,122,0.24),
+                 rgba(0,0,0,0.95));
       border: 1px solid var(--border-subtle);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.85);
     }
     body[data-theme="light"] .role-card {
       background: linear-gradient(135deg, rgba(255,51,102,0.08), #ffffff);
     }
     .role-card h4 {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.22em;
       margin-bottom: 6px;
-      color: #ffcc66;
+      color: #ffdd88;
+      font-family: 'Russo One', system-ui, -apple-system;
     }
     .role-keywords {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
     .role-desc {
       font-size: 0.9rem;
@@ -344,7 +377,9 @@
       max-width: 460px;
       border-radius: 12px;
       border: 1px solid var(--border-subtle);
-      box-shadow: 0 18px 45px rgba(0,0,0,0.9);
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.9),
+        0 0 24px rgba(255,51,122,0.55);
     }
     body[data-theme="light"] .tech-poster img {
       box-shadow: 0 12px 30px rgba(0,0,0,0.3);
@@ -353,6 +388,8 @@
       font-size: 0.8rem;
       color: var(--text-muted);
       margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
     .cta-strip {
@@ -360,7 +397,7 @@
       padding: 16px 18px;
       border-radius: 12px;
       border: 1px solid var(--border-subtle);
-      background: linear-gradient(135deg, rgba(255,51,102,0.18), rgba(0,0,0,0.9));
+      background: linear-gradient(135deg, rgba(255,51,122,0.24), rgba(0,0,0,0.9));
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
